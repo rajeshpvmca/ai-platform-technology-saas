@@ -276,7 +276,7 @@ body {
   .hero-title {
     font-size: 1.5rem;
   }
-  .btn-custom-primary, .btn-custom-secondary, .btn-custom-outlined {
+  .btn-custom-primary, .btn-custom-secondary, .btn-custom-outlined, .btn-book-demo {
     font-size: 0.8rem;
     padding: 0.4rem 1rem;
   }
@@ -426,4 +426,54 @@ body {
 .custom-nav-link.active {
   color: #6366f1 !important;
   font-weight: 600;
+}
+
+
+
+body, html {
+  overflow-x: hidden;
+}
+
+/* Full-screen Mobile Menu */
+@media (max-width: 991.98px) {
+  #navbarNav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: conic-gradient(from 218.21deg at 43.63% 50%, #020A3B 0deg, #0A135E 360deg);
+    z-index: 1040;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2rem 2rem 10rem 2rem;
+    overflow-y: auto;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  #navbarNav.collapsing {
+    height: 100vh;
+  }
+  #navbarNav .navbar-nav {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem !important;
+  }
+  #navbarNav .nav-item {
+    margin: 15px 0;
+  }
+  #navbarNav .nav-link {
+    font-size: 1.25rem;
+  }
+  #navbarNav .d-flex {
+    flex-direction: column !important;
+    width: 100%;
+    gap: 1.5rem !important;
+  }
+  #navbarNav .btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.75rem;
+  }
 }
