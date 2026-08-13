@@ -42,7 +42,7 @@ body {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid #FFFFFF;
   border-radius: 1rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
@@ -187,9 +187,14 @@ body {
   background: linear-gradient(155deg, #0A1334, #05102E);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid #FFFFFF;
   border-radius: 1rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-10px);
 }
 
 /* Pricing */
@@ -205,10 +210,9 @@ body {
 }
 .pricing-card {
   background: linear-gradient(146.04deg, #112143 1.26%, #0B1637 100%);
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid #FFFFFF;
   border-radius: 1rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.05);
   transition: transform 0.3s;
 }
 .pricing-card:hover {
