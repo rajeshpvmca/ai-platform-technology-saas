@@ -441,18 +441,18 @@ body, html {
     top: 100%;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 76px);
     background: conic-gradient(from 218.21deg at 43.63% 50%, #020A3B 0deg, #0A135E 360deg);
     z-index: 1040;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 2rem 2rem 10rem 2rem;
+    padding: 1rem 2rem 2rem 2rem;
     overflow-y: auto;
     border-top: 1px solid rgba(255,255,255,0.1);
   }
   #navbarNav.collapsing {
-    height: 100vh;
+    height: calc(100vh - 76px);
   }
   #navbarNav .navbar-nav {
     flex-direction: column;
@@ -461,15 +461,15 @@ body, html {
     margin-bottom: 2rem !important;
   }
   #navbarNav .nav-item {
-    margin: 15px 0;
+    margin: 5px 0;
   }
   #navbarNav .nav-link {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
   #navbarNav .d-flex {
     flex-direction: column !important;
     width: 100%;
-    gap: 1.5rem !important;
+    gap: 1rem !important;
   }
   #navbarNav .btn {
     width: 100%;
@@ -477,3 +477,4 @@ body, html {
     padding: 0.75rem;
   }
 }
+
