@@ -20,13 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const role = user.role || 'User';
     if (roleBadge) roleBadge.textContent = role;
 
-    const navCustomer = document.getElementById('navTenant');
-    const navArtisan = document.getElementById('navLandlord');
     const navAdmin = document.getElementById('navAdmin');
+    const navManager = document.getElementById('navManager');
+    const navUser = document.getElementById('navUser');
+    const navGuest = document.getElementById('navGuest');
 
-    if (navCustomer) navCustomer.style.display = role === 'Tenant' ? 'block' : 'none';
-    if (navArtisan) navArtisan.style.display = role === 'Landlord' ? 'block' : 'none';
     if (navAdmin) navAdmin.style.display = role === 'Admin' ? 'block' : 'none';
+    if (navManager) navManager.style.display = role === 'Manager' ? 'block' : 'none';
+    if (navUser) navUser.style.display = role === 'User' ? 'block' : 'none';
+    if (navGuest) navGuest.style.display = role === 'Guest' ? 'block' : 'none';
 
     // Signout Logic
     const signoutBtn = document.getElementById('signoutBtn');
@@ -45,13 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Define default pages for each role
     const roleDefaults = {
-        'Tenant': 'tenant_properties',
-        'Landlord': 'landlord_properties',
-        'Admin': 'admin_analytics'
+        'Admin': 'admin_analytics',
+        'Manager': 'manager_overview',
+        'User': 'user_workspace',
+        'Guest': 'guest_explore'
     };
 
+    
     // Restore last page
-    const lastPage = sessionStorage.getItem('dashPage') || roleDefaults[role];
+    const lastPage = sessionStorage.getItem('dashPage') || roleDefaults[role] || 'user_workspace';
     if (frame) {
         frame.src = 'dashboard/' + lastPage + '.html';
         links.forEach(a => {
@@ -110,4 +114,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
