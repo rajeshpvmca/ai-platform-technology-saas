@@ -29,8 +29,8 @@
   
   <main >
     
-    <section class="position-relative overflow-hidden">
-      <div class="container">
+    <section class="position-relative overflow-hidden d-flex align-items-center" style="min-height: calc(100vh - 80px); padding: 40px 0;">
+      <div class="container" style="max-width: 1000px;">
         
         <!-- Main Login Card -->
         <div class="rounded-4 overflow-hidden" data-aos="fade-up" style="background: rgba(10, 14, 39, 0.6); border: 1px solid rgba(122, 74, 246, 0.2); box-shadow: 0 0 40px rgba(0,0,0,0.5);">
@@ -39,9 +39,14 @@
             <!-- Left Column: Form -->
             <div class="col-lg-6 p-4 p-md-5 p-xl-5 d-flex flex-column justify-content-center">
               
+              
+              <a href="index.html" class="text-decoration-none text-white-50 small d-inline-block mb-4" style="transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+                <i class="bi bi-arrow-left me-1"></i> Back to Home
+              </a>
               <!-- Logo (Stackly) -->
-              <div class="mb-5">
-                <img src="assets/images/logo.webp" alt="Stackly" style="height: 35px;">
+              <div class="mb-3">
+                <!-- <img src="assets/images/logo.webp" alt="Stackly" style="height: 35px;"> -->
+                 <div style="-webkit-mask: url('assets/images/logo.webp') no-repeat center left; -webkit-mask-size: contain; mask: url('assets/images/logo.webp') no-repeat center left; mask-size: contain; background: linear-gradient(90deg, #1F8FF3 0%, #9A4BF0 100%); width: 140px; height: 35px;" aria-label="Stackly Logo"></div>
               </div>
               
               <h2 class="text-white fw-bold mb-2">Welcome Back</h2>
@@ -95,13 +100,13 @@
                 }
               </style>
 
-              <form>
+              <form id="loginForm">
                 <!-- Email Address -->
                 <div class="mb-4">
                   <label class="form-label text-white small fw-bold mb-2" style="font-size: 0.75rem;">Email Address</label>
                   <div class="position-relative">
                     <i class="bi bi-envelope input-icon"></i>
-                    <input type="email" class="form-control login-input" placeholder="Enter your email">
+                    <input type="email" id="loginEmail" class="form-control login-input" placeholder="Enter your email" required>
                   </div>
                 </div>
                 
@@ -110,13 +115,52 @@
                   <label class="form-label text-white small fw-bold mb-2" style="font-size: 0.75rem;">Role</label>
                   <div class="position-relative">
                     <i class="bi bi-person input-icon"></i>
-                    <select class="form-control login-input" style="appearance: none;">
-                      <option value="" disabled selected class="text-muted">Select your role</option>
-                      <option value="admin" style="color: #000;">Admin</option>
-                      <option value="manager" style="color: #000;">Manager</option>
-                      <option value="user" style="color: #000;">User</option>
-                    </select>
-                    <i class="bi bi-chevron-down position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.4); pointer-events: none; font-size: 0.75rem;"></i>
+                    <div class="d-none">
+                        <input type="radio" name="loginRole" value="Admin" id="loginRoleAdmin" checked>
+                        <input type="radio" name="loginRole" value="User" id="loginRoleUser">
+                        <input type="radio" name="loginRole" value="Manager" id="loginRoleManager">
+                        <input type="radio" name="loginRole" value="Guest" id="loginRoleGuest">
+                      </div>
+                      <div class="dropdown w-100">
+                        <button class="form-control login-input d-flex justify-content-between align-items-center w-100 text-start shadow-none" type="button" id="roleDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding-left: 45px !important;">
+                          <span class="text-white">Admin</span>
+                          <i class="bi bi-chevron-down text-white-50" style="font-size: 0.75rem;"></i>
+                        </button>
+                        <ul class="dropdown-menu w-100 mt-2 p-2" aria-labelledby="roleDropdown" style="background: #0B0E2A; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                          <li><a class="dropdown-item text-white rounded mb-1 d-flex align-items-center gap-2 py-2" href="#" style="background: linear-gradient(90deg, #7A4AF6, #407BFF); font-size: 0.85rem;"><i class="bi bi-people"></i> Admin</a></li>
+                          <li><a class="dropdown-item text-white-50 rounded mb-1 d-flex align-items-center gap-2 py-2 custom-dropdown-hover" href="#" style="font-size: 0.85rem;"><i class="bi bi-person"></i> User</a></li>
+                          <li><a class="dropdown-item text-white-50 rounded mb-1 d-flex align-items-center gap-2 py-2 custom-dropdown-hover" href="#" style="font-size: 0.85rem;"><i class="bi bi-people"></i> Manager</a></li>
+                          <li><a class="dropdown-item text-white-50 rounded d-flex align-items-center gap-2 py-2 custom-dropdown-hover" href="#" style="font-size: 0.85rem;"><i class="bi bi-person-badge"></i> Guest</a></li>
+                        </ul>
+                      </div>
+                      
+                      <style>
+                        .custom-dropdown-hover:hover {
+                          background: rgba(255,255,255,0.05) !important;
+                          color: #fff !important;
+                        }
+                        .dropdown-item:active {
+                          background: rgba(255,255,255,0.1) !important;
+                        }
+                      </style>
+                      
+                      <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                          const dropdownItems = document.querySelectorAll('#roleDropdown + .dropdown-menu .dropdown-item');
+                          const dropdownBtn = document.querySelector('#roleDropdown span');
+                          
+                          dropdownItems.forEach(item => {
+                            item.addEventListener('click', function(e) {
+                              e.preventDefault();
+                              const roleName = this.textContent.trim();
+                              dropdownBtn.textContent = roleName;
+                              
+                              const radio = document.getElementById('loginRole' + roleName);
+                              if(radio) radio.checked = true;
+                            });
+                          });
+                        });
+                      </script>
                   </div>
                 </div>
                 
@@ -125,14 +169,20 @@
                   <label class="form-label text-white small fw-bold mb-2" style="font-size: 0.75rem;">Password</label>
                   <div class="position-relative">
                     <i class="bi bi-lock input-icon"></i>
-                    <input type="password" class="form-control login-input" placeholder="Enter your Password">
+                    <input type="password" id="loginPassword" class="form-control login-input" placeholder="Enter your Password" required>
                   </div>
                 </div>
+
+                 <!-- Strength bar -->
+                        <div class="mb-2" style="height:4px;border-radius:4px;background:rgba(255,255,255,0.1);overflow:hidden;">
+                            <div id="strengthBar" style="height:100%;width:0;transition:width 0.3s, background 0.3s;"></div>
+                        </div>
+                        <div class="mb-4"></div>
                 
                 <!-- Remember Me & Forgot Password -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <div class="form-check custom-checkbox">
-                    <input class="form-check-input" type="checkbox" id="rememberMe" checked>
+                    <input class="form-check-input" type="checkbox" id="rememberMe" required>
                     <label class="form-check-label text-white small" for="rememberMe" style="font-size: 0.75rem;">
                       Remember Me
                     </label>
@@ -141,7 +191,7 @@
                 </div>
                 
                 <!-- Sign In Button -->
-                <button type="submit" class="btn text-white w-100 py-3 rounded-2 mb-4 d-flex justify-content-center align-items-center gap-2" style="background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%); border: none; font-weight: 500; font-size: 0.9rem;">
+                <button type="submit" class="btn btn-custom-primary text-white w-100 py-3 rounded-2 mb-4 d-flex justify-content-center align-items-center gap-2">
                   Sign In <i class="bi bi-arrow-right"></i>
                 </button>
                 
@@ -158,7 +208,12 @@
                     </button>
                   </div>
                 </div>
-              </form>
+              
+                  <!-- Register Link -->
+                  <div class="text-center mt-4">
+                    <span class="text-white-50 small" style="font-size: 0.8rem;">Don't have an account? <a href="signup.html" class="text-decoration-none" style="color: #9C7DFF;">Sign Up</a></span>
+                  </div>
+                </form>
 
             </div>
             
@@ -208,6 +263,30 @@
         offset: 50, // offset (in px) from the original trigger point
       });
     });
+
+     // Live password strength
+        const pwdInput = document.getElementById('loginPassword');
+        const bar = document.getElementById('strengthBar');
+        const rules = {
+            'r-len': v => v.length >= 8,
+            'r-upper': v => /[A-Z]/.test(v),
+            'r-num': v => /[0-9]/.test(v),
+            'r-sym': v => /[^A-Za-z0-9]/.test(v)
+        };
+        const colors = ['#dc3545', '#fd7e14', '#ffc107', '#10b981']; // Red, Orange, Yellow, Emerald Green
+        
+        pwdInput.addEventListener('input', () => {
+            const v = pwdInput.value;
+            let passed = 0;
+            Object.values(rules).forEach(fn => {
+                if (fn(v)) passed++;
+            });
+            bar.style.width = (passed / 4 * 100) + '%';
+            bar.style.background = colors[passed - 1] || 'rgba(255,255,255,0.1)';
+        });
+
   </script>
+  <script src="js/auth.js"></script>
 </body>
 </html>
+
