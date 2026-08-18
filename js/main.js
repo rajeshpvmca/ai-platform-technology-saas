@@ -35,3 +35,18 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => console.error('Error loading footer:', error));
 });
+
+
+// Preloader Logic
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('stackly-preloader');
+    if (preloader) {
+        // Add a slight delay for better visual effect, then fade out
+        setTimeout(() => {
+            preloader.classList.add('fade-out');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 600); // Matches CSS transition duration
+        }, 2000);
+    }
+});
