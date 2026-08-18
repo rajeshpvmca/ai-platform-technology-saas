@@ -21,6 +21,24 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css">
+
+    /* Contact Card Animation */
+    .contact-action-card {
+        transition: all 0.3s ease;
+    }
+    .contact-action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        border: 1px solid rgba(156, 125, 255, 0.3);
+    }
+    .contact-action-card .bi-arrow-right {
+        transition: transform 0.3s ease;
+    }
+    .contact-action-card:hover .bi-arrow-right {
+        transform: translateX(8px);
+        color: #9C7DFF !important;
+    }
+
 </head>
 <body>
 
@@ -101,19 +119,21 @@
                 }
               </style>
               
-              <form>
+              <form action="404.html">
                 <div class="row g-4 mb-4">
                   <div class="col-md-6">
-                    <input type="text" class="form-control shadow-none custom-input" placeholder="Full Name">
+                    <input type="text" class="form-control shadow-none custom-input" placeholder="Full Name" required  oninput="
+                       this.value = this.value.replace(/[^A-Za-z\s]/g, '')
+                     ">
                   </div>
                   <div class="col-md-6">
-                    <input type="email" class="form-control shadow-none custom-input" placeholder="Work Email">
+                    <input type="email" class="form-control shadow-none custom-input" placeholder="Work Email" required>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" class="form-control shadow-none custom-input" placeholder="Company Name">
+                    <input type="text" class="form-control shadow-none custom-input" placeholder="Company Name" required>
                   </div>
                   <div class="col-md-6">
-                    <input type="tel" class="form-control shadow-none custom-input" placeholder="Phone Number">
+                    <input type="number" class="form-control shadow-none custom-input" placeholder="Phone Number" required>
                   </div>
                   <div class="col-12">
                     <input type="text" class="form-control shadow-none custom-input" placeholder="Subject">
@@ -143,7 +163,7 @@
             
             <!-- Card 1 -->
             <div class="col-md-6 col-xl-3">
-              <div class="p-4 rounded-4 h-100 d-flex align-items-center gap-4" style="background: linear-gradient(180deg, #0E0A31 0%, #03061A 100%);">
+              <div class="p-4 rounded-4 h-100 d-flex align-items-center gap-4 contact-action-card" style="background: linear-gradient(180deg, #0E0A31 0%, #03061A 100%);">
                 <!-- Icon -->
                <div class="icon-wrapper d-flex align-items-center justify-content-center flex-shrink-0" style="width: 65px; height: 65px; border-radius: 12px; background: transparent;">
                   <img src="assets/images/contact/ai_icon_01.webp" alt="AI Models" style="width: 100%; height: 100%; object-fit: contain;">
@@ -152,7 +172,7 @@
                 <div class="flex-grow-1">
                   <h5 class="text-white fw-bold mb-1" style="font-size: 1.1rem;">Email Us</h5>
                   <p class="text-white-50 mb-3" style="font-size: 0.8rem; line-height: 1.4;">Drop us an email anytime</p>
-                  <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="window.top.location.href='404.html'">
                     <span style="color: #944AF9; font-size: 0.85rem;">hello@aiplat.com</span>
                     <i class="bi bi-arrow-right text-white"></i>
                   </div>
@@ -162,7 +182,7 @@
             
             <!-- Card 2 -->
             <div class="col-md-6 col-xl-3">
-              <div class="p-4 rounded-4 h-100 d-flex align-items-center gap-4" style="background: linear-gradient(180deg, #0E0A31 0%, #03061A 100%);">
+              <div class="p-4 rounded-4 h-100 d-flex align-items-center gap-4 contact-action-card"  style="background: linear-gradient(180deg, #0E0A31 0%, #03061A 100%);">
                 <!-- Icon -->
               <div class="icon-wrapper d-flex align-items-center justify-content-center flex-shrink-0" style="width: 65px; height: 65px; border-radius: 12px; background: transparent;">
                   <img src="assets/images/contact/ai_icon_02.webp" alt="AI Models" style="width: 100%; height: 100%; object-fit: contain;">
@@ -171,7 +191,7 @@
                 <div class="flex-grow-1">
                   <h5 class="text-white fw-bold mb-1" style="font-size: 1.1rem;">Live Chat</h5>
                   <p class="text-white-50 mb-3" style="font-size: 0.8rem; line-height: 1.4;">Chat with our support team</p>
-                  <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="window.top.location.href='404.html'">
                     <span style="color: #1F8FF3; font-size: 0.85rem;">Available 24/7</span>
                     <i class="bi bi-arrow-right text-white"></i>
                   </div>
@@ -181,7 +201,7 @@
 
             <!-- Card 3 -->
             <div class="col-md-6 col-xl-3">
-              <div class="p-4 rounded-4 h-100 d-flex align-items-center gap-4" style="background: linear-gradient(180deg, #0E0A31 0%, #03061A 100%);">
+              <div class="p-4 rounded-4 h-100 d-flex align-items-center gap-4 contact-action-card" style="background: linear-gradient(180deg, #0E0A31 0%, #03061A 100%);">
                 <!-- Icon -->
                 <div class="icon-wrapper d-flex align-items-center justify-content-center flex-shrink-0" style="width: 65px; height: 65px; border-radius: 12px; background: transparent;">
                   <img src="assets/images/contact/ai_icon_03.webp" alt="AI Models" style="width: 100%; height: 100%; object-fit: contain;">
@@ -190,8 +210,8 @@
                 <div class="flex-grow-1">
                   <h5 class="text-white fw-bold mb-1" style="font-size: 1.1rem;">Sales Inquiries</h5>
                   <p class="text-white-50 mb-3" style="font-size: 0.8rem; line-height: 1.4;">Talk to our sales experts</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span style="color: #2CCDCC; font-size: 0.85rem;">+1(888) 123-4567</span>
+                  <div class="d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="window.top.location.href='404.html'">
+                    <span style="color: #2CCDCC; font-size: 0.85rem;">+91 9876543210</span>
                     <i class="bi bi-arrow-right text-white"></i>
                   </div>
                 </div>
@@ -200,7 +220,7 @@
 
             <!-- Card 4 -->
             <div class="col-md-6 col-xl-3">
-              <div class="p-4 rounded-4 h-100 d-flex align-items-center gap-4" style="background: linear-gradient(180deg, #0E0A31 0%, #03061A 100%);">
+              <div class="p-4 rounded-4 h-100 d-flex align-items-center gap-4 contact-action-card" style="background: linear-gradient(180deg, #0E0A31 0%, #03061A 100%);">
                 <!-- Icon -->
                 <div class="icon-wrapper d-flex align-items-center justify-content-center flex-shrink-0" style="width: 65px; height: 65px; border-radius: 12px; background: transparent;">
                   <img src="assets/images/contact/ai_icon_04.webp" alt="AI Models" style="width: 100%; height: 100%; object-fit: contain;">
@@ -209,7 +229,7 @@
                 <div class="flex-grow-1">
                   <h5 class="text-white fw-bold mb-1" style="font-size: 1.1rem;">Support Center</h5>
                   <p class="text-white-50 mb-3" style="font-size: 0.8rem; line-height: 1.4;">Explore docs & help articles</p>
-                  <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="window.top.location.href='404.html'">
                     <span style="color: #944AF9; font-size: 0.85rem;">Visit Help Center</span>
                     <i class="bi bi-arrow-right text-white"></i>
                   </div>
