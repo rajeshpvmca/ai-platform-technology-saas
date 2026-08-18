@@ -4,81 +4,140 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Project Analytics</title>
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- ApexCharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <style>
-        body {
-            background-color: transparent;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 1.5rem;
-        }
-        .glass-card {
-            background: rgba(14, 21, 62, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .table-dark {
-            --bs-table-bg: transparent;
-            --bs-table-color: rgba(255, 255, 255, 0.8);
-            --bs-table-border-color: rgba(255, 255, 255, 0.1);
-        }
-        .table-dark th {
-            color: #fff;
-            font-weight: 600;
-        }
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
+        body { background-color: transparent; color: #ffffff; font-family: 'Inter', sans-serif; margin: 0; padding: 1.5rem; }
+        .glass-card { background: rgba(14, 21, 62, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.5rem; margin-bottom: 1.5rem; height: calc(100% - 1.5rem); }
+        .table-dark { --bs-table-bg: transparent; --bs-table-color: rgba(255, 255, 255, 0.8); --bs-table-border-color: rgba(255, 255, 255, 0.1); }
+        .table-dark th { color: #fff; font-weight: 600; white-space: nowrap; }
+        .table-dark td { vertical-align: middle; white-space: nowrap; }
+        .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
         .bg-primary-soft { background: rgba(156, 125, 255, 0.15); color: #9C7DFF; border: 1px solid rgba(156, 125, 255, 0.3); }
         .bg-success-soft { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
         .bg-warning-soft { background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3); }
         .bg-danger-soft { background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); }
-        
-        .btn-custom {
-            background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%);
-            border: none;
-            color: #fff;
-        }
+        .bg-info-soft { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .btn-custom { background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%); border: none; color: #fff; }
+        .form-control, .form-select { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; }
+        .form-control:focus, .form-select:focus { background-color: rgba(255, 255, 255, 0.08); border-color: #9C7DFF; color: #fff; box-shadow: 0 0 0 0.25rem rgba(156, 125, 255, 0.25); }
+        .avatar-sm { width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 0.8rem; }
+        .avatar-group { display: flex; align-items: center; }
+        .avatar-group .avatar-sm { border: 2px solid #0B0E2A; margin-left: -10px; }
+        .avatar-group .avatar-sm:first-child { margin-left: 0; }
         
         @media (max-width: 576px) {
             body { padding: 1rem; }
-            .glass-card { padding: 1rem; }
+            .glass-card { padding: 1rem; height: auto; }
+            .d-flex.flex-wrap { gap: 1rem !important; }
+            h4 { font-size: 1.2rem; }
+            h3 { font-size: 1.5rem; }
+            .btn { padding: 0.375rem 0.75rem; font-size: 0.875rem; }
+            .input-group { width: 100% !important; }
         }
+        .table-responsive::-webkit-scrollbar { height: 6px; }
+        .table-responsive::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
     </style>
 </head>
 <body>
     <div class="container-fluid px-0">
-        <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-4">
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-between align-items-start align-items-sm-center mb-4">
             <h4 class="fw-bold mb-0">Project Analytics</h4>
-            <div><button class="btn btn-custom btn-sm">New Project</button></div>
+            <div class="w-100 w-sm-auto text-end">
+            <div class="d-flex gap-2 justify-content-sm-end w-100">
+                <div class="input-group input-group-sm w-auto">
+                    <span class="input-group-text bg-transparent border-secondary text-white-50"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control bg-transparent text-white border-secondary" placeholder="Find project...">
+                </div>
+                <button class="btn btn-custom btn-sm text-nowrap"><i class="bi bi-folder-plus"></i> New Project</button>
+            </div></div>
         </div>
         
+        <div class="row g-3 mb-1">
+            <!-- Project Cards -->
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="badge bg-primary-soft">In Progress</span>
+                        <div class="dropdown">
+                            <button class="btn btn-sm text-white-50 p-0" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-dark"><li><a class="dropdown-item" href="#">Edit</a></li><li><a class="dropdown-item text-danger" href="#">Archive</a></li></ul>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-1">Chatbot UI Redesign</h5>
+                    <p class="text-white-50 small mb-4">Migrating frontend to React 18 with AI Platform theme components.</p>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1"><span>Progress</span><span class="text-primary">85%</span></div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);"><div class="progress-bar bg-primary" style="width: 85%"></div></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary">
+                        <div class="avatar-group">
+                            <div class="avatar-sm bg-info">AS</div><div class="avatar-sm bg-warning">RK</div><div class="avatar-sm bg-secondary text-white-50">+3</div>
+                        </div>
+                        <span class="small text-white-50"><i class="bi bi-clock me-1"></i> Due in 2 days</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="badge bg-warning-soft text-warning">Testing</span>
+                        <div class="dropdown">
+                            <button class="btn btn-sm text-white-50 p-0" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-dark"><li><a class="dropdown-item" href="#">Edit</a></li><li><a class="dropdown-item text-danger" href="#">Archive</a></li></ul>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-1">Image Gen API</h5>
+                    <p class="text-white-50 small mb-4">Setting up Stable Diffusion models behind rate-limited endpoints.</p>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1"><span>Progress</span><span class="text-warning">95%</span></div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);"><div class="progress-bar bg-warning" style="width: 95%"></div></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary">
+                        <div class="avatar-group">
+                            <div class="avatar-sm bg-danger">JD</div><div class="avatar-sm bg-success">ML</div>
+                        </div>
+                        <span class="small text-white-50"><i class="bi bi-clock me-1"></i> Due tomorrow</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="badge bg-danger-soft text-danger">At Risk</span>
+                        <div class="dropdown">
+                            <button class="btn btn-sm text-white-50 p-0" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-dark"><li><a class="dropdown-item" href="#">Edit</a></li><li><a class="dropdown-item text-danger" href="#">Archive</a></li></ul>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-1">Voice Model Integration</h5>
+                    <p class="text-white-50 small mb-4">Integrating Whisper API for real-time transcription features.</p>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1"><span>Progress</span><span class="text-danger">40%</span></div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);"><div class="progress-bar bg-danger" style="width: 40%"></div></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary">
+                        <div class="avatar-group">
+                            <div class="avatar-sm bg-primary">RP</div>
+                        </div>
+                        <span class="small text-danger fw-bold"><i class="bi bi-exclamation-circle me-1"></i> Overdue</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="glass-card">
-            <h6 class="fw-bold mb-4">Completion Rates</h6>
-            <div id="barChart"></div>
+            <h6 class="fw-bold mb-4">Completion Rates Overview</h6>
+            <div id="barChart" style="min-height: 250px;"></div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        var opt = { series: [{name: 'Completion', data: [85, 60, 95, 40, 75]}], chart: { height: 350, type: 'bar', toolbar: {show: false}, background: 'transparent' }, colors: ['#9C7DFF'], plotOptions: { bar: { borderRadius: 4, horizontal: true } }, dataLabels: { enabled: false }, xaxis: { categories: ['Chatbot UI', 'Image Gen API', 'Voice Model', 'Data Pipeline', 'Web Scraper'], labels: { style: { colors: 'rgba(255,255,255,0.5)' } }, axisBorder: {show: false}, axisTicks: {show: false} }, yaxis: { labels: { style: { colors: 'rgba(255,255,255,0.5)' } } }, grid: { borderColor: 'rgba(255,255,255,0.05)', strokeDashArray: 4 }, theme: { mode: 'dark' } };
+        var opt = { series: [{name: 'Completion %', data: [85, 95, 40, 75, 20]}], chart: { height: 250, type: 'bar', toolbar: {show: false}, background: 'transparent' }, colors: ['#9C7DFF'], plotOptions: { bar: { borderRadius: 4, horizontal: true, dataLabels: { position: 'top' } } }, dataLabels: { enabled: true, offsetX: 25, style: { colors: ['#fff'] } }, xaxis: { categories: ['Chatbot UI', 'Image Gen API', 'Voice Model', 'Data Pipeline', 'Web Scraper'], labels: { style: { colors: 'rgba(255,255,255,0.5)' } }, axisBorder: {show: false}, axisTicks: {show: false}, max: 100 }, yaxis: { labels: { style: { colors: 'rgba(255,255,255,0.8)', fontSize: '13px', fontWeight: 500 } } }, grid: { borderColor: 'rgba(255,255,255,0.05)', strokeDashArray: 4, xaxis: { lines: { show: true } }, yaxis: { lines: { show: false } } }, theme: { mode: 'dark' } };
         new ApexCharts(document.querySelector("#barChart"), opt).render();
         </script>
 </body>

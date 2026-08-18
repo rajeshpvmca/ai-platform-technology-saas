@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Account Settings</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="../css/style.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: transparent;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 1.5rem;
+        }
+        .glass-card {
+            background: rgba(14, 21, 62, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .table-dark {
+            --bs-table-bg: transparent;
+            --bs-table-color: rgba(255, 255, 255, 0.8);
+            --bs-table-border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-control, .form-select {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: #9C7DFF;
+            color: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(156, 125, 255, 0.25);
+        }
+        
+        .nav-pills .nav-link {
+            color: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+            color: #fff;
+            background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%);
+        }
+
+        .avatar-upload {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7A4AF6 0%, #407BFF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            position: relative;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .avatar-upload:hover::after {
+            content: '\F4F6';
+            font-family: 'bootstrap-icons';
+            position: absolute;
+            background: rgba(0,0,0,0.5);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 576px) {
+            body { padding: 1rem; }
+            .glass-card { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid px-0">
+        <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0">Account Settings</h4>
+            <div></div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="nav flex-column nav-pills" id="settings-tabs" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active text-start px-3 py-2" id="general-tab" data-bs-toggle="pill" data-bs-target="#general" type="button" role="tab"><i class="bi bi-gear me-2"></i> General</button>
+                    <button class="nav-link text-start px-3 py-2" id="notifications-tab" data-bs-toggle="pill" data-bs-target="#notifications" type="button" role="tab"><i class="bi bi-bell me-2"></i> Notifications</button>
+                    <button class="nav-link text-start px-3 py-2" id="api-tab" data-bs-toggle="pill" data-bs-target="#api" type="button" role="tab"><i class="bi bi-code-slash me-2"></i> Developer APIs</button>
+                    <button class="nav-link text-start px-3 py-2" id="billing-tab" data-bs-toggle="pill" data-bs-target="#billing" type="button" role="tab"><i class="bi bi-credit-card me-2"></i> Billing</button>
+                </div>
+            </div>
+            
+            <div class="col-md-9">
+                <div class="tab-content" id="settings-tabContent">
+                    <!-- General Settings -->
+                    <div class="tab-pane fade show active" id="general" role="tabpanel">
+                        <div class="glass-card">
+                            <h6 class="fw-bold mb-4">Platform Preferences</h6>
+                            
+                            <div class="mb-4">
+                                <label class="form-label small text-white-50 d-block">Theme Appearance</label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="themeRadio" id="themeDark" autocomplete="off" checked>
+                                    <label class="btn btn-outline-light" for="themeDark"><i class="bi bi-moon-fill"></i> Dark</label>
+                                  
+                                    <input type="radio" class="btn-check" name="themeRadio" id="themeLight" autocomplete="off">
+                                    <label class="btn btn-outline-light" for="themeLight"><i class="bi bi-sun-fill"></i> Light</label>
+                                  
+                                    <input type="radio" class="btn-check" name="themeRadio" id="themeSystem" autocomplete="off">
+                                    <label class="btn btn-outline-light" for="themeSystem"><i class="bi bi-display"></i> System</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label small text-white-50">Language</label>
+                                <select class="form-select" style="max-width: 300px;">
+                                    <option selected>English (US)</option>
+                                    <option value="1">Spanish</option>
+                                    <option value="2">French</option>
+                                    <option value="3">German</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label small text-white-50">Timezone</label>
+                                <select class="form-select" style="max-width: 300px;">
+                                    <option selected>(UTC-05:00) Eastern Time</option>
+                                    <option value="1">(UTC+00:00) London</option>
+                                    <option value="2">(UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+                                </select>
+                            </div>
+                            
+                            <hr class="border-secondary my-4">
+                            
+                            <h6 class="fw-bold mb-3 text-danger">Danger Zone</h6>
+                            <p class="text-white-50 small mb-3">Once you delete your account, there is no going back. Please be certain.</p>
+                            <button class="btn btn-outline-danger">Delete Account</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications -->
+                    <div class="tab-pane fade" id="notifications" role="tabpanel">
+                        <div class="glass-card">
+                            <h6 class="fw-bold mb-4">Email Notifications</h6>
+                            
+                            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-secondary pb-3">
+                                <div><p class="mb-0 fw-bold small">Product Updates</p><p class="text-white-50 small mb-0">Receive news on feature releases</p></div>
+                                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-secondary pb-3">
+                                <div><p class="mb-0 fw-bold small">Security Alerts</p><p class="text-white-50 small mb-0">Login attempts and password resets</p></div>
+                                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked disabled></div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-secondary pb-3">
+                                <div><p class="mb-0 fw-bold small">Billing Statements</p><p class="text-white-50 small mb-0">Monthly invoices and payment issues</p></div>
+                                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div><p class="mb-0 fw-bold small">API Usage Limits</p><p class="text-white-50 small mb-0">When you reach 80% and 100% of quota</p></div>
+                                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Developer APIs -->
+                    <div class="tab-pane fade" id="api" role="tabpanel">
+                        <div class="glass-card text-center py-5">
+                            <i class="bi bi-code-square text-white-50 mb-3 d-block" style="font-size: 2.5rem;"></i>
+                            <h6 class="fw-bold">No API Apps Created</h6>
+                            <p class="text-white-50 small mb-4">Create a developer app to obtain OAuth credentials.</p>
+                            <button class="btn btn-custom-primary btn-sm">Create App</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Billing -->
+                    <div class="tab-pane fade" id="billing" role="tabpanel">
+                        <div class="glass-card">
+                            <div class="d-flex justify-content-between align-items-start mb-4">
+                                <div>
+                                    <h6 class="fw-bold mb-1">Current Plan</h6>
+                                    <span class="badge bg-primary">Pro Plan</span>
+                                </div>
+                                <h3 class="fw-bold mb-0">$49<span class="fs-6 text-white-50">/mo</span></h3>
+                            </div>
+                            <p class="text-white-50 small mb-4">Your plan will automatically renew on Sep 01, 2026.</p>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-custom-outlined btn-sm">Cancel Plan</button>
+                                <button class="btn btn-custom-primary btn-sm">Upgrade to Enterprise</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

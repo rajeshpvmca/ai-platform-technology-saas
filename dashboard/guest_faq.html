@@ -3,88 +3,256 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Frequently Asked Questions</title>
-    <!-- Fonts -->
+    <title>Help Center & FAQ</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- ApexCharts -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <style>
-        body {
-            background-color: transparent;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 1.5rem;
-        }
-        .glass-card {
-            background: rgba(14, 21, 62, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .table-dark {
-            --bs-table-bg: transparent;
-            --bs-table-color: rgba(255, 255, 255, 0.8);
-            --bs-table-border-color: rgba(255, 255, 255, 0.1);
-        }
-        .table-dark th {
-            color: #fff;
-            font-weight: 600;
-        }
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        .bg-primary-soft { background: rgba(156, 125, 255, 0.15); color: #9C7DFF; border: 1px solid rgba(156, 125, 255, 0.3); }
-        .bg-success-soft { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .bg-warning-soft { background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3); }
-        .bg-danger-soft { background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        body { background-color: transparent; color: #ffffff; font-family: 'Inter', sans-serif; margin: 0; padding: 1.5rem; }
         
-        .btn-custom {
-            background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%);
-            border: none;
-            color: #fff;
-        }
+        .glass-card { background: rgba(14, 21, 62, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 2rem; margin-bottom: 2rem; }
         
-        @media (max-width: 576px) {
-            body { padding: 1rem; }
-            .glass-card { padding: 1rem; }
+        /* Hero Section */
+        .faq-hero {
+            background: linear-gradient(135deg, rgba(156, 125, 255, 0.15) 0%, rgba(64, 123, 255, 0.05) 100%);
+            border: 1px solid rgba(156, 125, 255, 0.2);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+        .faq-hero::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(156, 125, 255, 0.1) 0%, transparent 60%);
+            z-index: 0; pointer-events: none;
+        }
+        .faq-hero > * { position: relative; z-index: 1; }
+        
+        .search-container { max-width: 600px; margin: 0 auto; position: relative; }
+        .search-input { 
+            background: rgba(14, 21, 62, 0.8) !important; border: 1px solid rgba(156, 125, 255, 0.4) !important; 
+            color: #fff !important; padding: 1rem 1.5rem 1rem 3.5rem !important; border-radius: 50px !important; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .search-input:focus { box-shadow: 0 0 0 4px rgba(156, 125, 255, 0.2), 0 10px 30px rgba(0,0,0,0.3) !important; border-color: #9C7DFF !important; }
+        .search-icon { position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); color: #9C7DFF; font-size: 1.2rem; z-index: 10; }
+
+        /* Category Cards */
+        .category-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.5rem;
+            text-align: center; cursor: pointer; transition: all 0.3s ease; height: 100%;
+        }
+        .category-card:hover {
+            background: rgba(156, 125, 255, 0.1); border-color: rgba(156, 125, 255, 0.4); transform: translateY(-5px);
+        }
+        .category-icon { font-size: 2rem; margin-bottom: 1rem; background: -webkit-linear-gradient(90deg, #7A4AF6, #407BFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Custom Accordion */
+        .custom-accordion .accordion-item { background-color: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px !important; margin-bottom: 1rem; overflow: hidden; transition: all 0.3s ease; }
+        .custom-accordion .accordion-item:hover { border-color: rgba(255,255,255,0.15); }
+        .custom-accordion .accordion-button { background-color: transparent; color: #fff; box-shadow: none !important; font-weight: 600; padding: 1.25rem 1.5rem; font-size: 1.05rem; }
+        .custom-accordion .accordion-button:not(.collapsed) { background-color: rgba(156, 125, 255, 0.08); color: #9C7DFF; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .custom-accordion .accordion-button::after { filter: invert(1); transition: transform 0.3s ease; }
+        .custom-accordion .accordion-button:not(.collapsed)::after { filter: invert(60%) sepia(80%) saturate(3000%) hue-rotate(230deg) brightness(100%) contrast(100%); }
+        .custom-accordion .accordion-body { color: rgba(255,255,255,0.7); padding: 1.5rem; line-height: 1.6; }
+
+        /* CTA Section */
+        .cta-section { background: linear-gradient(90deg, rgba(122, 74, 246, 0.15) 0%, rgba(64, 123, 255, 0.15) 100%); border: 1px solid rgba(156, 125, 255, 0.3); border-radius: 16px; padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+        .btn-custom { background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%); border: none; color: #fff; padding: 0.75rem 2rem; font-weight: 600; border-radius: 8px; transition: transform 0.3s, box-shadow 0.3s; }
+        .btn-custom:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(139, 92, 246, 0.4); color: #fff; }
+
+        @media (max-width: 768px) {
+            .faq-hero { padding: 3rem 1.5rem; }
+            .cta-section { flex-direction: column; text-align: center; justify-content: center; }
         }
     </style>
 </head>
 <body>
     <div class="container-fluid px-0">
-        <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold mb-0">Frequently Asked Questions</h4>
-            <div></div>
-        </div>
         
-        <div class="glass-card">
-            <div class="accordion accordion-flush" id="faqAccordion" style="--bs-accordion-bg: transparent; --bs-accordion-color: #fff; --bs-accordion-border-color: rgba(255,255,255,0.1); --bs-accordion-btn-color: #fff; --bs-accordion-active-color: #9C7DFF; --bs-accordion-active-bg: transparent;">
-                <div class="accordion-item">
-                    <h2 class="accordion-header"><button class="accordion-button collapsed px-0 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">What models are available for guests?</button></h2>
-                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body px-0 text-white-50">Guests have access to our lightweight models for evaluation purposes only.</div></div>
+        <!-- Top Hero Search -->
+        <div class="faq-hero">
+            <span class="badge bg-primary-soft mb-3 px-3 py-2 border border-primary rounded-pill"><i class="bi bi-stars"></i> Stackly Support Center</span>
+            <h1 class="fw-bold mb-3" style="font-size: 2.5rem;">How can we help you?</h1>
+            <p class="text-white-50 mb-5 fs-5">Search our knowledge base or browse categories below.</p>
+            
+            <div class="search-container">
+                <i class="bi bi-search search-icon"></i>
+                <input type="text" class="form-control search-input" placeholder="e.g. How do I generate an API key?">
+            </div>
+            
+            <div class="mt-4 d-flex justify-content-center flex-wrap gap-2 small">
+                <span class="text-white-50">Popular searches:</span>
+                <a href="#billing" class="text-primary text-decoration-none">Billing</a>
+                <a href="#api" class="text-primary text-decoration-none">API Limits</a>
+                <a href="#models" class="text-primary text-decoration-none">Fine-tuning</a>
+            </div>
+        </div>
+
+        <div class="row gx-4 gy-5">
+            <!-- Left Column: Categories -->
+            <div class="col-lg-3">
+                <h5 class="fw-bold mb-4">Categories</h5>
+                <div class="row g-3">
+                    <div class="col-6 col-lg-12">
+                        <div class="category-card" onclick="document.getElementById('general-faq').scrollIntoView({behavior: 'smooth'})">
+                            <i class="bi bi-info-circle category-icon d-lg-inline-block d-block mb-lg-0 me-lg-3"></i>
+                            <span class="fw-bold">General</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-12">
+                        <div class="category-card" onclick="document.getElementById('billing-faq').scrollIntoView({behavior: 'smooth'})">
+                            <i class="bi bi-credit-card category-icon d-lg-inline-block d-block mb-lg-0 me-lg-3"></i>
+                            <span class="fw-bold">Billing</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-12">
+                        <div class="category-card" onclick="document.getElementById('tech-faq').scrollIntoView({behavior: 'smooth'})">
+                            <i class="bi bi-braces category-icon d-lg-inline-block d-block mb-lg-0 me-lg-3"></i>
+                            <span class="fw-bold">Technical</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-12">
+                        <div class="category-card" onclick="document.getElementById('security-faq').scrollIntoView({behavior: 'smooth'})">
+                            <i class="bi bi-shield-check category-icon d-lg-inline-block d-block mb-lg-0 me-lg-3"></i>
+                            <span class="fw-bold">Security</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header"><button class="accordion-button collapsed px-0 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">How do I get an API key?</button></h2>
-                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body px-0 text-white-50">You must upgrade to a User or Pro account to generate production API keys.</div></div>
+            </div>
+
+            <!-- Right Column: Accordions -->
+            <div class="col-lg-9">
+                
+                <!-- Section 1 -->
+                <div id="general-faq" class="mb-5 pt-2">
+                    <h4 class="fw-bold mb-4 d-flex align-items-center"><i class="bi bi-info-circle text-primary me-3"></i> General Questions</h4>
+                    <div class="accordion custom-accordion" id="accGeneral">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#gen1">What is Stackly AI Platform?</button></h2>
+                            <div id="gen1" class="accordion-collapse collapse show" data-bs-parent="#accGeneral">
+                                <div class="accordion-body">
+                                    Stackly is an enterprise-grade AI platform that provides developers and businesses access to state-of-the-art Large Language Models, Vision generators, and Audio transcribers via a unified, low-latency API.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gen2">What models are available for free?</button></h2>
+                            <div id="gen2" class="accordion-collapse collapse" data-bs-parent="#accGeneral">
+                                <div class="accordion-body">
+                                    Our <strong>Developer (Free)</strong> tier gives you access to our base <code class="text-primary bg-dark px-2 py-1 rounded">Stackly-LLM-Turbo</code> text model with a limit of 100 requests per month. Vision, Audio, and advanced LLMs require a Professional subscription.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gen3">How do I create an account?</button></h2>
+                            <div id="gen3" class="accordion-collapse collapse" data-bs-parent="#accGeneral">
+                                <div class="accordion-body">
+                                    Click on the "Sign Up" button on the top right corner of the page. You can register using your email address, or via Single Sign-On (SSO) with Google or GitHub.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Section 2 -->
+                <div id="billing-faq" class="mb-5 pt-2">
+                    <h4 class="fw-bold mb-4 d-flex align-items-center"><i class="bi bi-credit-card text-success me-3"></i> Plans & Billing</h4>
+                    <div class="accordion custom-accordion" id="accBilling">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bill1">Can I cancel my Pro subscription anytime?</button></h2>
+                            <div id="bill1" class="accordion-collapse collapse" data-bs-parent="#accBilling">
+                                <div class="accordion-body">
+                                    Absolutely. There are no long-term contracts for the Pro plan. You can cancel your subscription from the Billing settings page at any time, and you will not be billed for the following month. You will retain access until the end of your current billing cycle.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bill2">What happens if I exceed my API limit?</button></h2>
+                            <div id="bill2" class="accordion-collapse collapse" data-bs-parent="#accBilling">
+                                <div class="accordion-body">
+                                    If you are on the Developer tier, your requests will be rejected with a <code>429 Too Many Requests</code> error until the next month. On the Pro tier, you can configure "Overage Billing" to automatically pay for extra requests, or hard-cap it to prevent unexpected charges.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bill3">Do you offer refunds?</button></h2>
+                            <div id="bill3" class="accordion-collapse collapse" data-bs-parent="#accBilling">
+                                <div class="accordion-body">
+                                    We offer a 14-day money-back guarantee for your first month on the Pro plan. If you are not satisfied, contact support within 14 days of your initial payment for a full refund.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3 -->
+                <div id="tech-faq" class="mb-5 pt-2">
+                    <h4 class="fw-bold mb-4 d-flex align-items-center"><i class="bi bi-braces text-warning me-3"></i> Technical & API</h4>
+                    <div class="accordion custom-accordion" id="accTech">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tech1">How do I generate an API key?</button></h2>
+                            <div id="tech1" class="accordion-collapse collapse" data-bs-parent="#accTech">
+                                <div class="accordion-body">
+                                    First, you must create a free account and log in. Once inside the Dashboard, navigate to the <strong>API Activity</strong> section (if you are a User) or <strong>API Keys</strong> (if you are an Admin) to generate, rotate, or revoke your API keys.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tech2">Do you offer custom model fine-tuning?</button></h2>
+                            <div id="tech2" class="accordion-collapse collapse" data-bs-parent="#accTech">
+                                <div class="accordion-body">
+                                    Yes, custom fine-tuning is available exclusively on our <strong>Enterprise</strong> plan. Our engineering team will work with you to securely train models on your proprietary datasets without exposing your data publicly or using it to train our base models.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tech3">Are there SDKs available?</button></h2>
+                            <div id="tech3" class="accordion-collapse collapse" data-bs-parent="#accTech">
+                                <div class="accordion-body">
+                                    Yes! We officially support libraries for <strong>Python</strong> and <strong>Node.js</strong>. Community-maintained libraries are also available for Go, Ruby, and Java. You can find links to all SDKs in the API Documentation page.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4 -->
+                <div id="security-faq" class="mb-5 pt-2">
+                    <h4 class="fw-bold mb-4 d-flex align-items-center"><i class="bi bi-shield-check text-info me-3"></i> Data Security</h4>
+                    <div class="accordion custom-accordion" id="accSecurity">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec1">Is my data used to train your models?</button></h2>
+                            <div id="sec1" class="accordion-collapse collapse" data-bs-parent="#accSecurity">
+                                <div class="accordion-body">
+                                    <strong>No.</strong> We have a strict zero-retention policy for API payloads. The data you send through our API is never used to train or improve our foundational models.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec2">Are you SOC2 compliant?</button></h2>
+                            <div id="sec2" class="accordion-collapse collapse" data-bs-parent="#accSecurity">
+                                <div class="accordion-body">
+                                    Yes, Stackly is SOC2 Type II certified. Enterprise customers can request our compliance reports and penetration testing summaries by contacting our sales team.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="cta-section mt-5">
+                    <div>
+                        <h4 class="fw-bold mb-2">Still have questions?</h4>
+                        <p class="text-white-50 mb-0">Can't find the answer you're looking for? Our support team is here to help.</p>
+                    </div>
+                    <a href="guest_contact.html" class="btn btn-custom"><i class="bi bi-chat-dots me-2"></i> Contact Support</a>
+                </div>
+
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
 </body>
 </html>

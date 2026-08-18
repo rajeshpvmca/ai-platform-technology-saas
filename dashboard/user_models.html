@@ -3,83 +3,134 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Saved Models</title>
-    <!-- Fonts -->
+    <title>Model Library & Saved Prompts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- ApexCharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <style>
-        body {
-            background-color: transparent;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 1.5rem;
-        }
-        .glass-card {
-            background: rgba(14, 21, 62, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .table-dark {
-            --bs-table-bg: transparent;
-            --bs-table-color: rgba(255, 255, 255, 0.8);
-            --bs-table-border-color: rgba(255, 255, 255, 0.1);
-        }
-        .table-dark th {
-            color: #fff;
-            font-weight: 600;
-        }
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
+        body { background-color: transparent; color: #ffffff; font-family: 'Inter', sans-serif; margin: 0; padding: 1.5rem; }
+        .glass-card { background: rgba(14, 21, 62, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.5rem; margin-bottom: 1.5rem; height: calc(100% - 1.5rem); transition: transform 0.3s ease; }
+        .glass-card-hover:hover { transform: translateY(-5px); border-color: rgba(156, 125, 255, 0.5); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .table-dark { --bs-table-bg: transparent; --bs-table-color: rgba(255, 255, 255, 0.8); --bs-table-border-color: rgba(255, 255, 255, 0.1); }
+        .table-dark th { color: #fff; font-weight: 600; white-space: nowrap; }
+        .table-dark td { vertical-align: middle; white-space: nowrap; }
+        .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
         .bg-primary-soft { background: rgba(156, 125, 255, 0.15); color: #9C7DFF; border: 1px solid rgba(156, 125, 255, 0.3); }
         .bg-success-soft { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
         .bg-warning-soft { background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3); }
         .bg-danger-soft { background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); }
-        
-        .btn-custom {
-            background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%);
-            border: none;
-            color: #fff;
-        }
+        .bg-info-soft { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .btn-custom { background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%); border: none; color: #fff; }
+        .form-control, .form-select { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; }
+        .form-control:focus, .form-select:focus { background-color: rgba(255, 255, 255, 0.08); border-color: #9C7DFF; color: #fff; box-shadow: 0 0 0 0.25rem rgba(156, 125, 255, 0.25); }
+        .cursor-pointer { cursor: pointer; }
         
         @media (max-width: 576px) {
             body { padding: 1rem; }
-            .glass-card { padding: 1rem; }
+            .glass-card { padding: 1rem; height: auto; }
+            .d-flex.flex-wrap { gap: 1rem !important; }
+            h4 { font-size: 1.2rem; }
+            h3 { font-size: 1.5rem; }
+            .btn { padding: 0.375rem 0.75rem; font-size: 0.875rem; }
+            .input-group { width: 100% !important; }
         }
+        .table-responsive::-webkit-scrollbar { height: 6px; }
+        .table-responsive::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
     </style>
 </head>
 <body>
     <div class="container-fluid px-0">
-        <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold mb-0">Saved Models</h4>
-            <div><div class="dropdown"><button class="btn btn-outline-light btn-sm dropdown-toggle" data-bs-toggle="dropdown">Filter</button><ul class="dropdown-menu dropdown-menu-dark"><li><a class="dropdown-item" href="#">Language</a></li><li><a class="dropdown-item" href="#">Vision</a></li></ul></div></div>
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-between align-items-start align-items-sm-center mb-4">
+            <h4 class="fw-bold mb-0">Model Library & Saved Prompts</h4>
+            <div class="w-100 w-sm-auto text-end">
+            <div class="d-flex gap-2 justify-content-sm-end w-100">
+                <div class="btn-group">
+                    <button class="btn btn-custom btn-sm active">My Models</button>
+                    <button class="btn btn-outline-light btn-sm">Public Library</button>
+                </div>
+            </div></div>
         </div>
         
-        <div class="glass-card">
-            <div class="list-group list-group-flush bg-transparent">
-                <div class="list-group-item bg-transparent border-secondary text-white px-0 py-3 d-flex align-items-center justify-content-between">
-                    <div><h6 class="mb-1 fw-bold">Stackly-LLM-Pro</h6><small class="text-white-50">Fine-tuned for customer interactions</small></div>
-                    <button class="btn btn-sm btn-custom">Deploy</button>
+        <div class="row g-3">
+            <div class="col-lg-4">
+                <div class="glass-card">
+                    <h6 class="fw-bold mb-4">Saved Prompt Templates</h6>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text bg-transparent border-secondary text-white-50"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control bg-transparent text-white border-secondary" placeholder="Search prompts...">
+                    </div>
+                    <div class="list-group list-group-flush bg-transparent">
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent border-secondary text-white px-0 py-3 active-item" style="border-left: 3px solid #9C7DFF; padding-left: 1rem !important; background: rgba(156,125,255,0.1) !important;">
+                            <div class="d-flex justify-content-between mb-1">
+                                <h6 class="fw-bold mb-0">Code Review Expert</h6>
+                                <span class="badge bg-primary-soft">GPT-4</span>
+                            </div>
+                            <p class="mb-0 small text-white-50 text-truncate">You are a senior software engineer. Review this code for...</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent border-secondary text-white px-0 py-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <h6 class="fw-bold mb-0">Blog Post Generator</h6>
+                                <span class="badge bg-success-soft">Claude-3</span>
+                            </div>
+                            <p class="mb-0 small text-white-50 text-truncate">Write a SEO optimized blog post about {{topic}} with...</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent border-secondary text-white px-0 py-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <h6 class="fw-bold mb-0">Data Extractor JSON</h6>
+                                <span class="badge bg-warning-soft text-warning">Stackly-LLM</span>
+                            </div>
+                            <p class="mb-0 small text-white-50 text-truncate">Extract the following entities into a strict JSON format...</p>
+                        </a>
+                    </div>
+                    <button class="btn btn-outline-light btn-sm w-100 mt-3"><i class="bi bi-plus"></i> New Prompt</button>
                 </div>
-                <div class="list-group-item bg-transparent border-secondary text-white px-0 py-3 d-flex align-items-center justify-content-between">
-                    <div><h6 class="mb-1 fw-bold">Vision-Detect-V2</h6><small class="text-white-50">Object recognition in real-time</small></div>
-                    <button class="btn btn-sm btn-custom">Deploy</button>
+            </div>
+            
+            <div class="col-lg-8">
+                <div class="glass-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
+                        <h5 class="fw-bold mb-0">Code Review Expert</h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light"><i class="bi bi-copy"></i> Copy</button>
+                            <button class="btn btn-sm btn-custom"><i class="bi bi-play-fill"></i> Test in Playground</button>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-8">
+                            <label class="form-label small text-white-50 fw-bold">System Prompt</label>
+                            <div class="bg-dark bg-opacity-50 p-3 rounded border border-secondary mb-3" style="font-family: monospace; font-size: 0.9rem; color: #a5b4fc; min-height: 150px;">
+                                You are a senior software engineer with 10+ years of experience. Review the provided code snippet for:
+                                <br><br>
+                                1. Security vulnerabilities<br>
+                                2. Performance bottlenecks<br>
+                                3. Readability and best practices<br><br>
+                                Provide your feedback in a structured Markdown format.
+                            </div>
+                            
+                            <label class="form-label small text-white-50 fw-bold">Variables (Tags)</label>
+                            <div class="d-flex gap-2 mb-3">
+                                <span class="badge bg-secondary border border-light text-white px-2 py-1">{{code_snippet}}</span>
+                                <span class="badge bg-secondary border border-light text-white px-2 py-1">{{language}}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="p-3 rounded border border-secondary" style="background: rgba(255,255,255,0.02);">
+                                <h6 class="fw-bold small mb-3">Model Configuration</h6>
+                                
+                                <label class="form-label small text-white-50 mb-1">Temperature (0.2)</label>
+                                <input type="range" class="form-range mb-3" min="0" max="2" step="0.1" value="0.2">
+                                
+                                <label class="form-label small text-white-50 mb-1">Max Tokens (2048)</label>
+                                <input type="range" class="form-range mb-3" min="256" max="4096" step="256" value="2048">
+                                
+                                <label class="form-label small text-white-50 mb-1">Top P (1.0)</label>
+                                <input type="range" class="form-range mb-0" min="0" max="1" step="0.1" value="1.0">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

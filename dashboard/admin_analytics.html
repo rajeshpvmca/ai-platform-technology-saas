@@ -28,6 +28,7 @@
             -webkit-backdrop-filter: blur(12px);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            height: calc(100% - 1.5rem);
         }
         .table-dark {
             --bs-table-bg: transparent;
@@ -37,6 +38,11 @@
         .table-dark th {
             color: #fff;
             font-weight: 600;
+            white-space: nowrap;
+        }
+        .table-dark td {
+            vertical-align: middle;
+            white-space: nowrap;
         }
         .stat-icon {
             width: 48px;
@@ -46,11 +52,13 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
+            flex-shrink: 0;
         }
         .bg-primary-soft { background: rgba(156, 125, 255, 0.15); color: #9C7DFF; border: 1px solid rgba(156, 125, 255, 0.3); }
         .bg-success-soft { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
         .bg-warning-soft { background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3); }
         .bg-danger-soft { background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .bg-info-soft { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
         
         .btn-custom {
             background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%);
@@ -58,37 +66,178 @@
             color: #fff;
         }
         
+        .form-control, .form-select {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: #9C7DFF;
+            color: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(156, 125, 255, 0.25);
+        }
+
+        .avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Nav Pills for Settings */
+        .nav-pills .nav-link {
+            color: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        .nav-pills .nav-link.active {
+            color: #fff;
+            background: rgba(156, 125, 255, 0.2);
+            border: 1px solid rgba(156, 125, 255, 0.5);
+        }
+
+        /* 320px Responsiveness adjustments */
         @media (max-width: 576px) {
             body { padding: 1rem; }
-            .glass-card { padding: 1rem; }
+            .glass-card { padding: 1rem; height: auto; }
+            .d-flex.flex-wrap { gap: 1rem !important; }
+            h4 { font-size: 1.2rem; }
+            h3 { font-size: 1.5rem; }
+            .btn { padding: 0.375rem 0.75rem; font-size: 0.875rem; }
+            .input-group { width: 100% !important; }
         }
+        
+        /* Table responsive wrapper scrollbar */
+        .table-responsive::-webkit-scrollbar { height: 6px; }
+        .table-responsive::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
     </style>
 </head>
 <body>
     <div class="container-fluid px-0">
-        <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-4">
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-between align-items-start align-items-sm-center mb-4">
             <h4 class="fw-bold mb-0">Platform Analytics</h4>
-            <div><button class="btn btn-custom btn-sm"><i class="bi bi-download"></i> Export Report</button></div>
+            <div class="w-100 w-sm-auto text-end">
+            <div class="d-flex gap-2 justify-content-sm-end w-100">
+                <select class="form-select form-select-sm w-auto d-inline-block">
+                    <option>Last 7 Days</option>
+                    <option>Last 30 Days</option>
+                    <option>This Year</option>
+                </select>
+                <button class="btn btn-custom btn-sm text-nowrap"><i class="bi bi-download"></i> Export PDF</button>
+            </div></div>
         </div>
         
-        <div class="row g-3 mb-4">
-            <div class="col-sm-6 col-xl-3"><div class="glass-card h-100 mb-0 d-flex align-items-center gap-3"><div class="stat-icon bg-primary-soft"><i class="bi bi-people"></i></div><div><div class="text-white-50 small">Total Users</div><h3 class="mb-0 fw-bold">12,450</h3></div></div></div>
-            <div class="col-sm-6 col-xl-3"><div class="glass-card h-100 mb-0 d-flex align-items-center gap-3"><div class="stat-icon bg-success-soft"><i class="bi bi-currency-dollar"></i></div><div><div class="text-white-50 small">MRR</div><h3 class="mb-0 fw-bold">$45,200</h3></div></div></div>
-            <div class="col-sm-6 col-xl-3"><div class="glass-card h-100 mb-0 d-flex align-items-center gap-3"><div class="stat-icon bg-warning-soft"><i class="bi bi-cpu"></i></div><div><div class="text-white-50 small">API Calls</div><h3 class="mb-0 fw-bold">1.2M</h3></div></div></div>
-            <div class="col-sm-6 col-xl-3"><div class="glass-card h-100 mb-0 d-flex align-items-center gap-3"><div class="stat-icon bg-danger-soft"><i class="bi bi-bug"></i></div><div><div class="text-white-50 small">Error Rate</div><h3 class="mb-0 fw-bold">0.02%</h3></div></div></div>
+        <!-- Top KPI Cards -->
+        <div class="row g-3 mb-1">
+            <div class="col-sm-6 col-xl-3">
+                <div class="glass-card d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-primary-soft"><i class="bi bi-people"></i></div>
+                    <div>
+                        <div class="text-white-50 small text-nowrap">Total Active Users</div>
+                        <h3 class="mb-0 fw-bold">12,450 <span class="fs-6 text-success ms-2"><i class="bi bi-arrow-up"></i> 14%</span></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="glass-card d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-success-soft"><i class="bi bi-currency-dollar"></i></div>
+                    <div>
+                        <div class="text-white-50 small">Monthly Revenue (MRR)</div>
+                        <h3 class="mb-0 fw-bold">$45,200 <span class="fs-6 text-success ms-2"><i class="bi bi-arrow-up"></i> 8%</span></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="glass-card d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-warning-soft"><i class="bi bi-cpu"></i></div>
+                    <div>
+                        <div class="text-white-50 small">Total API Calls</div>
+                        <h3 class="mb-0 fw-bold">1.2M <span class="fs-6 text-danger ms-2"><i class="bi bi-arrow-down"></i> 2%</span></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="glass-card d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-danger-soft"><i class="bi bi-bug"></i></div>
+                    <div>
+                        <div class="text-white-50 small">Avg Error Rate</div>
+                        <h3 class="mb-0 fw-bold">0.02% <span class="fs-6 text-success ms-2"><i class="bi bi-arrow-down"></i> 0.01%</span></h3>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- Charts Row 1 -->
+        <div class="row g-3 mb-1">
+            <div class="col-lg-8">
+                <div class="glass-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h6 class="fw-bold mb-0">Revenue & Growth Trend</h6>
+                        <button class="btn btn-sm btn-outline-light"><i class="bi bi-three-dots"></i></button>
+                    </div>
+                    <div id="growthChart" style="min-height: 300px;"></div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="glass-card">
+                    <h6 class="fw-bold mb-4">Users by Subscription Plan</h6>
+                    <div id="planChart" class="d-flex justify-content-center"></div>
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-between mb-2 small"><span class="text-white-50"><i class="bi bi-circle-fill text-primary me-2"></i> Enterprise</span> <span class="fw-bold">44%</span></div>
+                        <div class="d-flex justify-content-between mb-2 small"><span class="text-white-50"><i class="bi bi-circle-fill text-info me-2"></i> Pro</span> <span class="fw-bold">55%</span></div>
+                        <div class="d-flex justify-content-between small"><span class="text-white-50"><i class="bi bi-circle-fill text-success me-2"></i> Free</span> <span class="fw-bold">13%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 2 -->
         <div class="row g-3">
-            <div class="col-lg-8"><div class="glass-card"><h6 class="fw-bold mb-4">Revenue & Growth</h6><div id="growthChart"></div></div></div>
-            <div class="col-lg-4"><div class="glass-card"><h6 class="fw-bold mb-4">Users by Plan</h6><div id="planChart"></div></div></div>
+            <div class="col-lg-6">
+                <div class="glass-card">
+                    <h6 class="fw-bold mb-4">Server Load Capacity (Regions)</h6>
+                    <div id="radarChart" style="min-height: 250px;"></div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h6 class="fw-bold mb-0">Top Active Endpoints</h6>
+                        <a href="#" class="text-primary text-decoration-none small">View All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-dark mb-0">
+                            <thead><tr><th>Endpoint</th><th>Requests</th><th>Latency (ms)</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td><code class="text-info">/api/v1/chat/completions</code></td><td>845,021</td><td>120ms</td><td><span class="badge bg-success-soft">Healthy</span></td></tr>
+                                <tr><td><code class="text-info">/api/v1/images/generate</code></td><td>234,510</td><td>850ms</td><td><span class="badge bg-warning-soft">Degraded</span></td></tr>
+                                <tr><td><code class="text-info">/api/v1/audio/transcribe</code></td><td>120,400</td><td>200ms</td><td><span class="badge bg-success-soft">Healthy</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        var opt1 = { series: [{name: 'Revenue', data: [31, 40, 28, 51, 42, 109, 100]}, {name: 'Users', data: [11, 32, 45, 32, 34, 52, 41]}], chart: { height: 300, type: 'area', toolbar: {show: false}, background: 'transparent' }, colors: ['#9C7DFF', '#407BFF'], fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05, stops: [0, 100] } }, dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 }, xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], labels: { style: { colors: 'rgba(255,255,255,0.5)' } }, axisBorder: {show: false}, axisTicks: {show: false} }, yaxis: { labels: { style: { colors: 'rgba(255,255,255,0.5)' } } }, grid: { borderColor: 'rgba(255,255,255,0.05)', strokeDashArray: 4 }, theme: { mode: 'dark' } };
+        // Area Chart
+        var opt1 = { series: [{name: 'Revenue ($)', data: [31000, 40000, 28000, 51000, 42000, 109000, 100000]}, {name: 'New Users', data: [1100, 3200, 4500, 3200, 3400, 5200, 4100]}], chart: { height: 300, type: 'area', toolbar: {show: false}, background: 'transparent' }, colors: ['#9C7DFF', '#407BFF'], fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05, stops: [0, 100] } }, dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 }, xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], labels: { style: { colors: 'rgba(255,255,255,0.5)' } }, axisBorder: {show: false}, axisTicks: {show: false} }, yaxis: { labels: { style: { colors: 'rgba(255,255,255,0.5)' } } }, grid: { borderColor: 'rgba(255,255,255,0.05)', strokeDashArray: 4 }, theme: { mode: 'dark' } };
         new ApexCharts(document.querySelector("#growthChart"), opt1).render();
 
-        var opt2 = { series: [44, 55, 13], labels: ['Pro', 'Enterprise', 'Free'], chart: { type: 'donut', height: 300, background: 'transparent' }, colors: ['#9C7DFF', '#407BFF', '#10B981'], stroke: { show: false }, dataLabels: { enabled: false }, legend: { position: 'bottom', labels: { colors: '#fff' } }, theme: { mode: 'dark' } };
+        // Donut Chart
+        var opt2 = { series: [44, 55, 13], labels: ['Enterprise', 'Pro', 'Free'], chart: { type: 'donut', height: 250, background: 'transparent' }, colors: ['#9C7DFF', '#407BFF', '#10B981'], stroke: { show: false }, dataLabels: { enabled: false }, legend: { show: false }, theme: { mode: 'dark' }, plotOptions: { pie: { donut: { size: '75%' } } } };
         new ApexCharts(document.querySelector("#planChart"), opt2).render();
+
+        // Radar Chart
+        var opt3 = { series: [{ name: 'Server Load', data: [80, 50, 30, 40, 100, 20], }], chart: { height: 250, type: 'radar', toolbar: {show: false}, background: 'transparent' }, labels: ['US-East', 'US-West', 'EU-Central', 'Asia-Pac', 'Aus-South', 'SA-East'], stroke: { colors: ['#407BFF'] }, fill: { opacity: 0.2, colors: ['#407BFF'] }, markers: { size: 4, colors: ['#fff'], strokeColors: '#407BFF', strokeWidth: 2 }, yaxis: { show: false }, xaxis: { labels: { style: { colors: ['#fff','#fff','#fff','#fff','#fff','#fff'], fontSize: '10px' } } }, theme: { mode: 'dark' } };
+        new ApexCharts(document.querySelector("#radarChart"), opt3).render();
         </script>
 </body>
 </html>

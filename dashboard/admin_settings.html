@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>System Settings</title>
+    <title>System Configuration</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Icons -->
@@ -28,6 +28,7 @@
             -webkit-backdrop-filter: blur(12px);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            height: calc(100% - 1.5rem);
         }
         .table-dark {
             --bs-table-bg: transparent;
@@ -37,6 +38,11 @@
         .table-dark th {
             color: #fff;
             font-weight: 600;
+            white-space: nowrap;
+        }
+        .table-dark td {
+            vertical-align: middle;
+            white-space: nowrap;
         }
         .stat-icon {
             width: 48px;
@@ -46,11 +52,13 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
+            flex-shrink: 0;
         }
         .bg-primary-soft { background: rgba(156, 125, 255, 0.15); color: #9C7DFF; border: 1px solid rgba(156, 125, 255, 0.3); }
         .bg-success-soft { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
         .bg-warning-soft { background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3); }
         .bg-danger-soft { background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .bg-info-soft { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
         
         .btn-custom {
             background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%);
@@ -58,26 +66,178 @@
             color: #fff;
         }
         
+        .form-control, .form-select {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: #9C7DFF;
+            color: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(156, 125, 255, 0.25);
+        }
+
+        .avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Nav Pills for Settings */
+        .nav-pills .nav-link {
+            color: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        .nav-pills .nav-link.active {
+            color: #fff;
+            background: rgba(156, 125, 255, 0.2);
+            border: 1px solid rgba(156, 125, 255, 0.5);
+        }
+
+        /* 320px Responsiveness adjustments */
         @media (max-width: 576px) {
             body { padding: 1rem; }
-            .glass-card { padding: 1rem; }
+            .glass-card { padding: 1rem; height: auto; }
+            .d-flex.flex-wrap { gap: 1rem !important; }
+            h4 { font-size: 1.2rem; }
+            h3 { font-size: 1.5rem; }
+            .btn { padding: 0.375rem 0.75rem; font-size: 0.875rem; }
+            .input-group { width: 100% !important; }
         }
+        
+        /* Table responsive wrapper scrollbar */
+        .table-responsive::-webkit-scrollbar { height: 6px; }
+        .table-responsive::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
     </style>
 </head>
 <body>
     <div class="container-fluid px-0">
-        <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold mb-0">System Settings</h4>
-            <div><button class="btn btn-custom btn-sm"><i class="bi bi-save"></i> Save Changes</button></div>
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-between align-items-start align-items-sm-center mb-4">
+            <h4 class="fw-bold mb-0">System Configuration</h4>
+            <div class="w-100 w-sm-auto text-end"><button class="btn btn-custom btn-sm text-nowrap"><i class="bi bi-save"></i> Save All Changes</button></div>
         </div>
         
-        <div class="row">
-            <div class="col-md-6">
-                <div class="glass-card">
-                    <h6 class="mb-4 fw-bold">General Settings</h6>
-                    <div class="mb-3"><label class="form-label text-white-50 small">Platform Name</label><input type="text" class="form-control bg-transparent text-white border-secondary" value="Stackly AI"></div>
-                    <div class="mb-3"><label class="form-label text-white-50 small">Support Email</label><input type="email" class="form-control bg-transparent text-white border-secondary" value="support@stackly.com"></div>
-                    <div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="maintenanceMode"><label class="form-check-label text-white-50" for="maintenanceMode">Maintenance Mode</label></div>
+        <div class="row g-4">
+            <!-- Left Column: Tabs/Nav -->
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" id="admin-settings-tabs" role="tablist">
+                    <button class="nav-link active text-start px-3 py-3 d-flex align-items-center gap-2" id="general-tab" data-bs-toggle="pill" data-bs-target="#general" type="button"><i class="bi bi-sliders"></i> Platform Core</button>
+                    <button class="nav-link text-start px-3 py-3 d-flex align-items-center gap-2" id="auth-tab" data-bs-toggle="pill" data-bs-target="#auth" type="button"><i class="bi bi-shield-lock"></i> Auth & SSO</button>
+                    <button class="nav-link text-start px-3 py-3 d-flex align-items-center gap-2" id="email-tab" data-bs-toggle="pill" data-bs-target="#email" type="button"><i class="bi bi-envelope-at"></i> SMTP & Emails</button>
+                    <button class="nav-link text-start px-3 py-3 d-flex align-items-center gap-2" id="webhooks-tab" data-bs-toggle="pill" data-bs-target="#webhooks" type="button"><i class="bi bi-hdd-network"></i> Webhooks</button>
+                </div>
+            </div>
+            
+            <!-- Right Column: Content -->
+            <div class="col-md-9">
+                <div class="tab-content">
+                    
+                    <!-- Core Settings -->
+                    <div class="tab-pane fade show active" id="general">
+                        <div class="glass-card">
+                            <h6 class="fw-bold mb-4">Core Platform Configuration</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small text-white-50">App Name</label>
+                                    <input type="text" class="form-control" value="Stackly AI Platform">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small text-white-50">Support Contact Email</label>
+                                    <input type="email" class="form-control" value="support@stackly.com">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small text-white-50">Default New User Role</label>
+                                    <select class="form-select">
+                                        <option>Guest</option>
+                                        <option selected>User</option>
+                                        <option>Manager</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small text-white-50">Maximum Upload Size (MB)</label>
+                                    <input type="number" class="form-control" value="50">
+                                </div>
+                            </div>
+                            
+                            <hr class="border-secondary my-4">
+                            
+                            <h6 class="fw-bold mb-3">System Maintenance</h6>
+                            <div class="d-flex align-items-center justify-content-between p-3 rounded mb-3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                                <div>
+                                    <h6 class="mb-1 fw-bold text-warning">Enable Maintenance Mode</h6>
+                                    <p class="mb-0 small text-white-50">Blocks non-admin users from logging in and shows a maintenance screen.</p>
+                                </div>
+                                <div class="form-check form-switch fs-4"><input class="form-check-input" type="checkbox"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Auth Settings -->
+                    <div class="tab-pane fade" id="auth">
+                        <div class="glass-card">
+                            <h6 class="fw-bold mb-4">OAuth & Single Sign-On (SSO)</h6>
+                            
+                            <div class="mb-4">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <i class="bi bi-google fs-3 text-white"></i>
+                                        <div><h6 class="mb-0 fw-bold">Google Auth</h6><small class="text-white-50">Allow users to sign in with Google</small></div>
+                                    </div>
+                                    <div class="form-check form-switch fs-5"><input class="form-check-input" type="checkbox" checked></div>
+                                </div>
+                                <div class="bg-dark bg-opacity-50 p-3 rounded border border-secondary">
+                                    <div class="mb-3">
+                                        <label class="form-label small text-white-50">Client ID</label>
+                                        <input type="text" class="form-control form-control-sm" value="123456789-abc.apps.googleusercontent.com">
+                                    </div>
+                                    <div class="mb-0">
+                                        <label class="form-label small text-white-50">Client Secret</label>
+                                        <input type="password" class="form-control form-control-sm" value="********">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="border-secondary my-4">
+                            
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <i class="bi bi-github fs-3 text-white"></i>
+                                        <div><h6 class="mb-0 fw-bold">GitHub Auth</h6><small class="text-white-50">Allow developers to sign in with GitHub</small></div>
+                                    </div>
+                                    <div class="form-check form-switch fs-5"><input class="form-check-input" type="checkbox"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Empty Tabs for demo -->
+                    <div class="tab-pane fade" id="email">
+                        <div class="glass-card text-center py-5">
+                            <i class="bi bi-envelope-paper text-white-50 mb-3 fs-1"></i>
+                            <h6 class="fw-bold">SMTP Configuration</h6>
+                            <p class="text-white-50 small mb-4">Configure your SendGrid or AWS SES credentials here.</p>
+                            <button class="btn btn-outline-light btn-sm">Setup SMTP</button>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="webhooks">
+                        <div class="glass-card text-center py-5">
+                            <i class="bi bi-hdd-network text-white-50 mb-3 fs-1"></i>
+                            <h6 class="fw-bold">Global Webhooks</h6>
+                            <p class="text-white-50 small mb-4">Fire events to external servers on user creation, payment success, etc.</p>
+                            <button class="btn btn-custom-primary btn-sm">Add Endpoint</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

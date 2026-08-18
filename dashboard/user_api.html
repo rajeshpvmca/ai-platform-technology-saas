@@ -3,82 +3,116 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>API Activity</title>
-    <!-- Fonts -->
+    <title>API Activity & Keys</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- ApexCharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <style>
-        body {
-            background-color: transparent;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 1.5rem;
-        }
-        .glass-card {
-            background: rgba(14, 21, 62, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .table-dark {
-            --bs-table-bg: transparent;
-            --bs-table-color: rgba(255, 255, 255, 0.8);
-            --bs-table-border-color: rgba(255, 255, 255, 0.1);
-        }
-        .table-dark th {
-            color: #fff;
-            font-weight: 600;
-        }
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
+        body { background-color: transparent; color: #ffffff; font-family: 'Inter', sans-serif; margin: 0; padding: 1.5rem; }
+        .glass-card { background: rgba(14, 21, 62, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.5rem; margin-bottom: 1.5rem; height: calc(100% - 1.5rem); transition: transform 0.3s ease; }
+        .glass-card-hover:hover { transform: translateY(-5px); border-color: rgba(156, 125, 255, 0.5); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .table-dark { --bs-table-bg: transparent; --bs-table-color: rgba(255, 255, 255, 0.8); --bs-table-border-color: rgba(255, 255, 255, 0.1); }
+        .table-dark th { color: #fff; font-weight: 600; white-space: nowrap; }
+        .table-dark td { vertical-align: middle; white-space: nowrap; }
+        .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
         .bg-primary-soft { background: rgba(156, 125, 255, 0.15); color: #9C7DFF; border: 1px solid rgba(156, 125, 255, 0.3); }
         .bg-success-soft { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
         .bg-warning-soft { background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3); }
         .bg-danger-soft { background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); }
-        
-        .btn-custom {
-            background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%);
-            border: none;
-            color: #fff;
-        }
+        .bg-info-soft { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .btn-custom { background: linear-gradient(90deg, #7A4AF6 0%, #407BFF 100%); border: none; color: #fff; }
+        .form-control, .form-select { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; }
+        .form-control:focus, .form-select:focus { background-color: rgba(255, 255, 255, 0.08); border-color: #9C7DFF; color: #fff; box-shadow: 0 0 0 0.25rem rgba(156, 125, 255, 0.25); }
+        .cursor-pointer { cursor: pointer; }
         
         @media (max-width: 576px) {
             body { padding: 1rem; }
-            .glass-card { padding: 1rem; }
+            .glass-card { padding: 1rem; height: auto; }
+            .d-flex.flex-wrap { gap: 1rem !important; }
+            h4 { font-size: 1.2rem; }
+            h3 { font-size: 1.5rem; }
+            .btn { padding: 0.375rem 0.75rem; font-size: 0.875rem; }
+            .input-group { width: 100% !important; }
         }
+        .table-responsive::-webkit-scrollbar { height: 6px; }
+        .table-responsive::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
     </style>
 </head>
 <body>
     <div class="container-fluid px-0">
-        <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold mb-0">API Activity</h4>
-            <div><button class="btn btn-outline-light btn-sm"><i class="bi bi-arrow-clockwise"></i> Refresh</button></div>
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-between align-items-start align-items-sm-center mb-4">
+            <h4 class="fw-bold mb-0">API Activity & Keys</h4>
+            <div class="w-100 w-sm-auto text-end"><button class="btn btn-custom btn-sm text-nowrap"><i class="bi bi-key"></i> Generate Key</button></div>
         </div>
         
-        <div class="glass-card">
-            <h6 class="fw-bold mb-4">Requests Last 24h</h6>
-            <div id="apiChart"></div>
+        <!-- Stats Row -->
+        <div class="row g-3 mb-1">
+            <div class="col-md-4">
+                <div class="glass-card d-flex align-items-center justify-content-between">
+                    <div><div class="text-white-50 small mb-1">Total Requests (30d)</div><h3 class="mb-0 fw-bold">124,502</h3></div>
+                    <div class="stat-icon bg-primary-soft"><i class="bi bi-activity"></i></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card d-flex align-items-center justify-content-between">
+                    <div><div class="text-white-50 small mb-1">Current Quota Usage</div><h3 class="mb-0 fw-bold">12%</h3></div>
+                    <div class="stat-icon bg-success-soft"><i class="bi bi-pie-chart"></i></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card d-flex align-items-center justify-content-between">
+                    <div><div class="text-white-50 small mb-1">Average Latency</div><h3 class="mb-0 fw-bold">185ms</h3></div>
+                    <div class="stat-icon bg-warning-soft"><i class="bi bi-speedometer2"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-8">
+                <div class="glass-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h6 class="fw-bold mb-0">API Request Volume</h6>
+                        <select class="form-select form-select-sm w-auto bg-transparent"><option>Last 7 Days</option><option>Last 24 Hours</option></select>
+                    </div>
+                    <div id="apiChart" style="min-height: 250px;"></div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="glass-card">
+                    <h6 class="fw-bold mb-4">My Personal API Keys</h6>
+                    <div class="mb-3 p-3 rounded border border-secondary" style="background: rgba(255,255,255,0.03);">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold small">Default Key</span>
+                            <span class="badge bg-success-soft">Active</span>
+                        </div>
+                        <div class="input-group input-group-sm mb-2">
+                            <input type="password" class="form-control bg-dark border-secondary text-primary font-monospace" value="sk-1234567890abcdef" readonly>
+                            <button class="btn btn-outline-light"><i class="bi bi-eye"></i></button>
+                            <button class="btn btn-outline-light"><i class="bi bi-copy"></i></button>
+                        </div>
+                        <span class="small text-white-50">Created: Jan 15, 2026</span>
+                    </div>
+                    
+                    <div class="mb-3 p-3 rounded border border-secondary" style="background: rgba(255,255,255,0.03);">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold small text-white-50">Test Env Key</span>
+                            <span class="badge bg-danger-soft text-danger">Revoked</span>
+                        </div>
+                        <div class="input-group input-group-sm mb-2">
+                            <input type="text" class="form-control bg-dark border-secondary text-secondary font-monospace" value="sk-test-revoked..." readonly disabled>
+                            <button class="btn btn-outline-danger" disabled><i class="bi bi-trash"></i></button>
+                        </div>
+                        <span class="small text-white-50">Revoked: Aug 01, 2026</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        var opt = { series: [{name: 'Requests', data: [120, 200, 150, 400, 320, 500, 450]}], chart: { height: 350, type: 'area', toolbar: {show: false}, background: 'transparent' }, colors: ['#10B981'], fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05 } }, dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 }, xaxis: { categories: ['12am', '4am', '8am', '12pm', '4pm', '8pm', '11pm'], labels: { style: { colors: 'rgba(255,255,255,0.5)' } }, axisBorder: {show: false}, axisTicks: {show: false} }, yaxis: { labels: { style: { colors: 'rgba(255,255,255,0.5)' } } }, grid: { borderColor: 'rgba(255,255,255,0.05)', strokeDashArray: 4 }, theme: { mode: 'dark' } };
+        var opt = { series: [{name: 'Requests', data: [12000, 20000, 15000, 40000, 32000, 50000, 45000]}], chart: { height: 280, type: 'area', toolbar: {show: false}, background: 'transparent' }, colors: ['#407BFF'], fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05, stops: [0, 100] } }, dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 }, xaxis: { categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], labels: { style: { colors: 'rgba(255,255,255,0.5)' } }, axisBorder: {show: false}, axisTicks: {show: false} }, yaxis: { labels: { style: { colors: 'rgba(255,255,255,0.5)' } } }, grid: { borderColor: 'rgba(255,255,255,0.05)', strokeDashArray: 4 }, theme: { mode: 'dark' } };
         new ApexCharts(document.querySelector("#apiChart"), opt).render();
         </script>
 </body>
